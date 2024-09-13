@@ -40,6 +40,13 @@ io.on('connection', (socket) => {
   socket.on('bingo', (winnerName) => {
     io.emit('gameEnded', winnerName);
   });
+
+  socket.on('winGame', (data) => {
+    const { username, winningValues } = data;
+    console.log('Win game data:', data);
+    io.emit('gameEnded', { winnerName: username, winningValues });
+    io.emit('winnerAnnouncement', `${username} has won the game!`);
+  });
 });
 
 const PORT = 3001;
